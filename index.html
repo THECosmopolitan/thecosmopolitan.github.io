@@ -1,9 +1,45 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>THECosmopolitan</title>
-  </head>
-  <body></body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#79060D">
+  <meta name="description" content="THE COSMOPOLITAN — a crimson audiovisual experience.">
+  <title>THE COSMOPOLITAN</title>
+  <link rel="preload" href="bodoni-moda.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- HERO: razor-thin ice light around a black film, suspended in scarlet haze. -->
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="blade blade-one" aria-hidden="true"></div>
+  <div class="blade blade-two" aria-hidden="true"></div>
+  <button class="sound-button" id="sound" type="button" aria-label="静音" aria-pressed="false" title="静音">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><g class="sound-waves"><path d="M16 8a6 6 0 0 1 0 8M19 5a10 10 0 0 1 0 14"/></g><path class="sound-slash" d="m4 3 17 18"/></svg>
+  </button>
+  <main>
+    <header><h1>THE <span>COSMOPOLITAN</span></h1></header>
+    <section class="film-section" aria-label="视频">
+      <button class="film-trigger" id="open-film" type="button" aria-label="播放测试视频">
+        <span class="film-shade" aria-hidden="true"></span>
+        <svg class="play-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="m18 12 19 12-19 12z"/></svg>
+        <span class="film-caption"><span>PLAY FILM</span><span>00:08</span></span>
+      </button>
+      <p class="music-credit">黄之仪 Kyra Zilver · 4D <span>—</span> Burying</p>
+    </section>
+  </main>
+  <dialog id="film-dialog" aria-label="测试视频播放器">
+    <div class="cinema">
+      <button class="close-button" id="close-film" type="button" aria-label="关闭视频">关闭 <span aria-hidden="true">×</span></button>
+      <video id="film" src="blank-film.mp4" controls playsinline preload="metadata" aria-label="8 秒空白测试视频"></video>
+      <p class="cinema-note">视频结束后，音乐渐入。</p>
+      <p class="media-error" id="video-error" role="status" hidden></p>
+    </div>
+  </dialog>
+  <audio id="music" src="burying.mp3" loop preload="none"></audio>
+  <p class="audio-notice" id="audio-notice" role="status" hidden></p>
+  <canvas id="stardust" aria-hidden="true"></canvas>
+</body>
 </html>

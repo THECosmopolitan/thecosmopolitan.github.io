@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <defs>
+    <radialGradient id="rose"><stop stop-color="#f6ccd5" stop-opacity=".42"/><stop offset=".37" stop-color="#ef94ab" stop-opacity=".24"/><stop offset="1" stop-color="#ef94ab" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ember"><stop stop-color="#ef94ab" stop-opacity=".11"/><stop offset="1" stop-color="#d90b19" stop-opacity="0"/></radialGradient>
+    <filter id="smoke" x="-40%" y="-40%" width="180%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".006 .009" numOctaves="3" seed="18" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="180" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <g filter="url(#smoke)"><ellipse cx="330" cy="160" rx="680" ry="230" fill="url(#rose)" transform="rotate(-23 330 160)"/><ellipse cx="340" cy="750" rx="440" ry="260" fill="url(#ember)"/><ellipse cx="830" cy="380" rx="580" ry="130" fill="url(#ember)" transform="rotate(-30 830 380)"/></g>
+</svg>
