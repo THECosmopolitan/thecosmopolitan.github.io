@@ -98,6 +98,7 @@ const canvas = document.querySelector('#stardust');
 const ctx = canvas.getContext('2d');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let particles = [], lastPointer = null, frame = 0, width = 0, height = 0;
+let travel = 0, lastSpawn = -Infinity;
 function resize() {
   width = innerWidth; height = innerHeight;
   const ratio = Math.min(devicePixelRatio || 1, 2);
@@ -147,25 +148,31 @@ addEventListener('pointermove', event => {
   if (reduced.matches || event.pointerType === 'touch' || document.hidden) return;
   const now = performance.now();
   const current = {x: event.clientX, y: event.clientY, time: now};
-  if (!lastPointer || now - lastPointer.time > 120) { lastPointer = current; return; }
+  if (!lastPointer || now - lastPointer.time > 120) {
+    lastPointer = current; travel = 0; lastSpawn = -Infinity; return;
+  }
   const dx = current.x - lastPointer.x, dy = current.y - lastPointer.y;
   const distance = Math.hypot(dx, dy);
   const speed = distance / Math.max(1, now - lastPointer.time);
-  const count = Math.min(36, Math.ceil(distance / (4 + Math.min(speed * 5, 16))));
-  for (let i = 1; i <= count; i++) {
-    const t = i / count;
-    particles.push({x: lastPointer.x + dx * t, y: lastPointer.y + dy * t,
-      size: Math.random() < 0.04 ? 16 : 3 + Math.random() * 9,
-      opacity: 0.45 + Math.random() * 0.4, life: 600 + Math.random() * 600, born: now,
+  travel += distance;
+  // Sample by distance AND time. Fast sweeps leave isolated sparks, never a filled line.
+  const spacing = 12 + Math.min(speed * 12, 60);
+  const interval = Math.min(60, 30 + speed * 6);
+  if (distance > 0 && travel >= spacing && now - lastSpawn >= interval) {
+    particles.push({x: current.x, y: current.y,
+      size: Math.random() < 0.02 ? 20 : 4.5 + Math.random() * 9,
+      opacity: 0.34 + Math.random() * 0.3, life: 600 + Math.random() * 300, born: now,
       dx: (Math.random() - 0.5) * 12, dy: (Math.random() - 0.5) * 16,
       dot: Math.random() < 0.23});
+    travel = 0; lastSpawn = now;
   }
-  if (particles.length > 140) particles.splice(0, particles.length - 140);
+  if (particles.length > 40) particles.splice(0, particles.length - 40);
   lastPointer = current;
   if (!frame && particles.length) frame = requestAnimationFrame(render);
 }, {passive: true});
 function clearTrail() {
   cancelAnimationFrame(frame); frame = 0; particles = []; lastPointer = null;
+  travel = 0; lastSpawn = -Infinity;
   ctx.clearRect(0, 0, width, height);
 }
 reduced.addEventListener('change', clearTrail);
