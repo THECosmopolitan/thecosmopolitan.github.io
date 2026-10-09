@@ -160,10 +160,10 @@ addEventListener('pointermove', event => {
   const interval = Math.min(60, 30 + speed * 6);
   if (distance > 0 && travel >= spacing && now - lastSpawn >= interval) {
     particles.push({x: current.x, y: current.y,
-      size: Math.random() < 0.02 ? 20 : 4.5 + Math.random() * 9,
+      size: Math.random() < 0.1 ? 20 + Math.random() * 10 : 4.5 + Math.random() * 9,
       opacity: 0.34 + Math.random() * 0.3, life: 600 + Math.random() * 300, born: now,
       dx: (Math.random() - 0.5) * 12, dy: (Math.random() - 0.5) * 16,
-      dot: Math.random() < 0.23});
+      dot: Math.random() < 0.32});
     travel = 0; lastSpawn = now;
   }
   if (particles.length > 40) particles.splice(0, particles.length - 40);
